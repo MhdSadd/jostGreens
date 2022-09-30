@@ -1,0 +1,70 @@
+<%- include("../partials/admin/side-nav") %>
+  <%- include("../partials/admin/header") %>
+    <style>
+      .singleBusiness {
+        color: white;
+        background-color: #58B15D;
+        padding: .5rem 2rem;
+        border-radius: .3rem;
+        font-weight: bolder;
+      }
+
+      .singleBusiness:hover {
+        color: #58B15D;
+        background-color: #fff;
+        border: 2px solid #58B15D;
+        font-weight: bolder;
+      }
+    </style>
+
+
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-header-success">
+                <h4 class="card-title ">Businesses ( <%= bussinesCount %> ) </h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class="text-black">
+                      <th>
+                        Business Name
+                      </th>
+                      <th>
+                        Phone
+                      </th>
+                      <th>
+                        Address
+                      </th>
+                    </thead>
+                    <tbody>
+                      <%allBusinesses.forEach(buss=> { %>
+                        <tr>
+                          <td>
+                            <a href="/admin/single-business/<%= buss._id %>" class="singleBusiness">
+                              <%= buss.businessName %>
+                            </a>
+                          </td>
+                          <td>
+                            <%= buss.businessPhone %>
+                          </td>
+                          <td>
+                            <%= buss.businessAddress %>
+                          </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <%- include("../partials/admin/footer") %>
