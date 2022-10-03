@@ -1,6 +1,6 @@
 const { validatePhoneNumberSync } = require("nigeria-phone-number-validator");
 const { Business } = require("../models/business");
-const { cloudinaryMediaUpload } = require(".././config/cloudinary");
+const cloudinaryMediaUpload = require(".././config/cloudinary");
 
 module.exports = {
   indexGet: (req, res) => {
@@ -32,11 +32,7 @@ module.exports = {
   registerPost: async (req, res) => {
     const { businessName, businessAddress, businessPhone, businessCategory } =
       req.body;
-
-    // console.log(req.body);
-    console.log(req.files);
     let errors = [];
-
     // Checking Required Field
     if (
       !businessName ||
@@ -44,11 +40,17 @@ module.exports = {
       !businessPhone ||
       !businessCategory
     ) {
-      errors.push({ msg: "All fields are required" });
+      errors.push({ msg: "Inavalid registration data: Check your inputs" });
+      req.flash("error_msg", "Inavalid registration data: Check your inputs");
+      res.redirect("back");
+      return;
     }
+    if (!req.files) return req.flash("error", "All fields are required");
+
     let validatePhone = validatePhoneNumberSync(businessPhone);
     if (!validatePhone.isValid === true) {
       errors.push({ msg: "Invalid phone number" });
+      req.flash("error_msg", "Invalid phone number");
     }
 
     if (errors.length > 0) {
@@ -61,52 +63,61 @@ module.exports = {
         errors,
       });
     } else {
-      Business.findOne({ businessName }).then(async (buss) => {
-        if (buss) {
-          errors.push({
-            msg: "A business with this name is already registered",
-          });
-          let pageTitle = "Register";
-          res.render("default/register", {
-            pageTitle,
-            businessName,
-            businessAddress,
-            businessPhone,
-            errors,
-          });
-        } else {
-          // uploading files to cloud
-          const uploader = async (path) => {
-            const folderName = businessName
-              .trim()
-              .toLowerCase()
-              .replace(/^[^A-Z0-9]+/gi, function (match) {
-                return arguments[2].toUpperCase();
-              });
-
-            console.log(folderName);
-
-            await cloudinaryMediaUpload(path, "folderName");
-          };
-          const urls = [];
-          const files = req.files;
-          for (const file of files) {
-            const { path } = file;
-            const cloudPath = await uploader(path);
-            urls.push(cloudPath);
-          }
-
-          const newBusiness = new Business({
-            businessName,
-            businessAddress,
-            businessPhone,
-            businessCategory,
-          });
-          newBusiness.save();
-          req.flash("success_msg", "Business successfully registered");
-          res.redirect("/");
+      try {
+        // uploading files to cloud
+        const uploader = async (path) =>
+          await cloudinaryMediaUpload(path, "BussFiles");
+        const IncopDocsUrls = [];
+        const ProfileUrls = [];
+        const FinDocsUrls = [];
+        const PitchDeckUrls = [];
+        const files = req.files;
+        for (const file of files.IncopDocs) {
+          const { path } = file;
+          const cloudPath = await uploader(path);
+          IncopDocsUrls.push(cloudPath);
         }
-      });
+
+        for (const file of files.Profile) {
+          const { path } = file;
+          const cloudPath = await uploader(path);
+          ProfileUrls.push(cloudPath);
+        }
+
+        for (const file of files.FinDocs) {
+          const { path } = file;
+          const cloudPath = await uploader(path);
+          FinDocsUrls.push(cloudPath);
+        }
+
+        for (const file of files.PitchDeck) {
+          const { path } = file;
+          const cloudPath = await uploader(path);
+          PitchDeckUrls.push(cloudPath);
+        }
+
+        const newBusiness = new Business({
+          businessName,
+          businessAddress,
+          businessPhone,
+          businessCategory,
+          investmentDeck: [...PitchDeckUrls],
+          financialStatement: [...FinDocsUrls],
+          companyProfile: [...ProfileUrls],
+          incorporationDoc: [...IncopDocsUrls],
+        });
+        newBusiness.save();
+        req.flash("success_msg", "Business successfully registered");
+        res.redirect("/");
+      } catch (error) {
+        console.log("THIS IS THE ERROR===>", error);
+        req.flash(
+          "error_msg",
+          "Registration failed: Check your inputs and try again"
+        );
+        res.redirect("back");
+        return;
+      }
     }
   },
 };
