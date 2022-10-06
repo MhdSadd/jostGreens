@@ -71,6 +71,7 @@ include("../partials/admin/header") %>
               <table class="table">
                 <thead class="text-black">
                   <th>Business Name</th>
+                  <th>Progress</th>
                   <th>Phone</th>
                   <th>Address</th>
                 </thead>
@@ -88,6 +89,7 @@ include("../partials/admin/header") %>
                         <%= buss.businessName %>
                       </button>
                     </td>
+                    <td><%= buss.progress %>% </td>
                     <td><%= buss.businessPhone %></td>
                     <td><%= buss.businessAddress %></td>
                   </tr>
@@ -303,7 +305,9 @@ include("../partials/admin/header") %>
                             </div>
                           </div>
                         </div>
-
+                        <div>
+                          
+                        </div>
                         <div class="py-3 m-auto">
                           <button
                             type="button"
