@@ -19,6 +19,10 @@ const businessSchema = new Schema(
       type: String,
       required: true,
     },
+    progress: {
+      type: Number,
+      default: 50,
+    },
     investmentDeck: {
       type: [],
       required: true,
