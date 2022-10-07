@@ -1,55 +1,53 @@
-<%- include("../partials/admin/side-nav") %> <%-
-include("../partials/admin/header") %>
+<%- include("../partials/admin/side-nav") %>
+  <%- include("../partials/admin/header") %>
 
-<script
-  src="https://kit.fontawesome.com/f577db74dc.js"
-  crossorigin="anonymous"
-></script>
-<style>
-  .singleBusiness {
-    color: white;
-    background-color: #58b15d;
-    padding: 0.5rem 2rem;
-    border-radius: 0.3rem;
-    font-weight: bolder;
-  }
+    <script src="https://kit.fontawesome.com/f577db74dc.js" crossorigin="anonymous"></script>
+    
+    <style>
+      .singleBusiness {
+        color: white;
+        background-color: #58b15d;
+        padding: 0.5rem 2rem;
+        border-radius: 0.3rem;
+        font-weight: bolder;
+      }
 
-  .singleBusiness:hover {
-    color: #58b15d;
-    background-color: #fff;
-    border: 2px solid #58b15d;
-    font-weight: bolder;
-  }
+      .singleBusiness:hover {
+        color: #58b15d;
+        background-color: #fff;
+        border: 2px solid #58b15d;
+        font-weight: bolder;
+      }
 
-  .files {
-    border-bottom: 1px solid #e9ecef;
-    /* padding: 0.5rem 0; */
-  }
+      .files {
+        border-bottom: 1px solid #e9ecef;
+        /* padding: 0.5rem 0; */
+      }
 
-  .modal-dialog {
-    overflow: hidden;
-  }
+      .modal-dialog {
+        overflow: hidden;
+      }
 
-  .contain {
-    position: relative;
-  }
+      .contain {
+        position: relative;
+      }
 
-  .overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    width: 100%;
-    opacity: 0;
-    transition: 0.5s ease-in-out;
-    background-color: #58b15d;
-  }
+      .overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        transition: 0.5s ease-in-out;
+        background-color: #58b15d;
+      }
 
-  .contain:hover .overlay {
-    opacity: 0.9;
-  }
+      .contain:hover .overlay {
+        opacity: 0.9;
+      }
 
   li {
     list-style: none;
@@ -69,172 +67,140 @@ include("../partials/admin/header") %>
 }
 </style>
 
-<div class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header card-header-success">
-            <h4 class="card-title">Businesses ( <%= bussinesCount %> )</h4>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table">
-                <thead class="text-black">
-                  <th>Business Name</th>
-                  <th>Progress</th>
-                  <th>Phone</th>
-                  <th>Address</th>
-                </thead>
-                <tbody>
-                  <%allBusinesses.forEach(buss=> { %>
-                  <tr>
-                    <td>
-                      <!-- Button trigger modal -->
-                      <button
-                        href="/admin/single-business/<%= buss._id %>"
-                        class="btn singleBusiness"
-                        data-toggle="modal"
-                        data-target="#ID<%=buss._id%>"
-                      >
-                        <%= buss.businessName %>
-                      </button>
-                    </td>
-                    <td><%= buss.progress %>% </td>
-                    <td><%= buss.businessPhone %></td>
-                    <td><%= buss.businessAddress %></td>
-                  </tr>
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-header-success">
+                <h4 class="card-title">Businesses ( <%= bussinesCount %> )</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class="text-black">
+                      <th>Business Name</th>
+                      <th>Progress</th>
+                      <th>Phone</th>
+                      <th>Address</th>
+                    </thead>
+                    <tbody>
+                      <%allBusinesses.forEach(buss=> { %>
+                        <tr>
+                          <td>
+                            <!-- Button trigger modal -->
+                            <button href="/admin/single-business/<%= buss._id %>" class="btn singleBusiness"
+                              data-toggle="modal" data-target="#ID<%=buss._id%>">
+                              <%= buss.businessName %>
+                            </button>
+                          </td>
+                          <td>
+                            <%= buss.progress %>%
+                          </td>
+                          <td>
+                            <%= buss.businessPhone %>
+                          </td>
+                          <td>
+                            <%= buss.businessAddress %>
+                          </td>
+                        </tr>
 
-                  <!-- Business Details Modal starts -->
-                  <div
-                    class="modal fade"
-                    id="ID<%=buss._id%>"
-                    data-backdrop="static"
-                    tabindex="-1"
-                    aria-labelledby="staticBackdropLabel"
-                    aria-hidden="true"
-                  >
-                    <div class="modal-dialog modal-lg">
-                      <div class="modal-content">
-                        <div
-                          class="modal-header d-flex justify-content-between align-items-center"
-                        >
-                          <h5 class="modal-title" id="staticBackdropLabel">
-                            <b> <%- buss.businessName %> </b>
-                          </h5>
-                          <button
-                            type="button"
-                            class="btn-close btn btn-default btn-md"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                          >
-                            <i class="fas fa-close"></i>
-                          </button>
-                        </div>
-                        <div>
-                          <ul class="row justify-content-around py-4">
-                            <div class="col-md-4 check d-flex align-items-center">
-                              <i class="fa-solid fa-phone mr-2"></i>
-                              <li class="font-weight-bold">
-                                Phone: <%= buss.businessPhone%>
-                              </li>
-                            </div>
-                            <div class="col-md-4 check d-flex align-items-center">
-                              <i class="fa-solid fa-house mr-2"></i>
-                              <li class="font-weight-bold">
-                                Address: <%= buss.businessAddress%>
-                              </li>
-                            </div>
-                            <div class="col-md-4 check d-flex align-items-center">
-                              <i class="fa-solid fa-briefcase mr-2" aria-hidden="true"></i>
-                              <li class="font-weight-bold">
-                                Business Category: <%= buss.businessCategory%>
-                              </li>
-                            </div>
-                          </ul>
+                        <!-- Business Details Modal starts -->
+                        <div class="modal fade" id="ID<%=buss._id%>" data-backdrop="static" tabindex="-1"
+                          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                              <div class="modal-header d-flex justify-content-between align-items-center">
+                                <h5 class="modal-title" id="staticBackdropLabel">
+                                  <b>
+                                    <%- buss.businessName %>
+                                  </b>
+                                </h5>
+                                <button type="button" class="btn-close btn btn-default btn-md" data-dismiss="modal"
+                                  aria-label="Close">
+                                  <i class="fas fa-close"></i>
+                                </button>
+                              </div>
+                              <div>
+                                <ul class="row justify-content-around py-4">
+                                  <div class="col-md-4 check d-flex align-items-center">
+                                    <i class="fa-solid fa-phone mr-2"></i>
+                                    <li class="font-weight-bold">
+                                      Phone: <%= buss.businessPhone%>
+                                    </li>
+                                  </div>
+                                  <div class="col-md-4 check d-flex align-items-center">
+                                    <i class="fa-solid fa-house mr-2"></i>
+                                    <li class="font-weight-bold">
+                                      Address: <%= buss.businessAddress%>
+                                    </li>
+                                  </div>
+                                  <div class="col-md-4 check d-flex align-items-center">
+                                    <i class="fa-solid fa-briefcase mr-2" aria-hidden="true"></i>
+                                    <li class="font-weight-bold">
+                                      Business Category: <%= buss.businessCategory%>
+                                    </li>
+                                  </div>
+                                </ul>
 
-                          <div
-                            class="files d-flex justify-content-around pb-3 flex-wrap"
-                          >
-                            <div class="investment_deck">
-                              <% for (doc of buss.investmentDeck) { %>
-                              <a href="<%=doc.url%>" target="_blank">
-                                <h6>Investment Deck</h6>
-                                <div class="contain">
-                                  <object
-                                    data="<%=doc.url%>"
-                                    type="buss/pdf"
-                                    width="250"
-                                    height="250"
-                                  >
-                                    <iframe
-                                      src="<%=doc.url%>"
-                                      width="250"
-                                      height="250"
-                                      style="border: 1px solid #ccc"
-                                    >
-                                      <p>
-                                        Your browser does not support PDFs.
-                                        <a href="<%=doc.url%>"
-                                          >Download Investment Deck</a
-                                        >
-                                      </p>
-                                    </iframe>
-                                  </object>
-                                  <div
-                                    class="overlay d-flex justify-content-center h-100 align-items-center"
-                                  >
-                                    <div
-                                      class="text"
-                                      style="color: #fff; font-weight: 600"
-                                    >
-                                      READ MORE
+                                <div class="files d-flex justify-content-around pb-3 flex-wrap">
+
+                                  <!-- INVESTMENT PITCH DECK SECTION STARTS -->
+                                  <div class="group">
+                                    <h4>Investment Deck</h4>
+                                    <div class="investment_deck d-flex mb-5">
+                                      <% for (doc of buss.investmentDeck) { %>
+                                        <a href="<%=doc.url%>" target="_blank">
+                                          <div class="contain">
+                                            <object data="<%=doc.url%>" type="buss/pdf" width="250" height="250">
+                                              <iframe src="<%=doc.url%>" width="250" height="250"
+                                                style="border: 1px solid #ccc">
+                                                <p>
+                                                  Your browser does not support PDFs.
+                                                  <a href="<%=doc.url%>">Download Investment Deck</a>
+                                                </p>
+                                              </iframe>
+                                            </object>
+                                            <div class="overlay d-flex justify-content-center h-100 align-items-center">
+                                              <div class="text" style="color: #fff; font-weight: 600">
+                                                VIEW
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </a>
+                                        <% } %>
                                     </div>
                                   </div>
-                                </div>
-                              </a>
-                              <% } %>
-                            </div>
+                                  <!-- INVESTMENT PITCH DECK SECTION ENDS -->
 
-                            <div class="financial_statement">
-                              <% for (doc of buss.financialStatement) { %>
-                              <a href="<%=doc.url%>" target="_blank">
-                                <h6>Financial Statement</h6>
-                                <div class="contain">
-                                  <object
-                                    data="<%=doc.url%>"
-                                    type="buss/pdf"
-                                    width="250"
-                                    height="250"
-                                  >
-                                    <iframe
-                                      src="<%=doc.url%>"
-                                      width="250"
-                                      height="250"
-                                      style="border: 1px solid #ccc"
-                                    >
-                                      <p>
-                                        Your browser does not support PDFs.
-                                        <a href="<%=doc.url%>"
-                                          >Download Investment Deck</a
-                                        >
-                                      </p>
-                                    </iframe>
-                                  </object>
-                                  <div
-                                    class="overlay d-flex justify-content-center h-100 align-items-center"
-                                  >
-                                    <div
-                                      class="text"
-                                      style="color: #fff; font-weight: 600"
-                                    >
-                                      READ MORE
+
+                                  <!-- FINANCIAL DOCS SECTION STARTS -->
+                                  <div class="group">
+                                    <h4>Financial Statement</h4>
+                                    <div class="financial_statement d-flex mb-5">
+                                      <% for (doc of buss.financialStatement) { %>
+                                        <a href="<%=doc.url%>" target="_blank">
+                                          <div class="contain">
+                                            <object data="<%=doc.url%>" type="buss/pdf" width="250" height="250">
+                                              <iframe src="<%=doc.url%>" width="250" height="250"
+                                                style="border: 1px solid #ccc">
+                                                <p>
+                                                  Your browser does not support PDFs.
+                                                  <a href="<%=doc.url%>">Download Investment Deck</a>
+                                                </p>
+                                              </iframe>
+                                            </object>
+                                            <div class="overlay d-flex justify-content-center h-100 align-items-center">
+                                              <div class="text" style="color: #fff; font-weight: 600">
+                                                VIEW
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </a>
+                                        <% } %>
                                     </div>
                                   </div>
-                                </div>
-                              </a>
-                              <% } %>
-                            </div>
+                                  <!-- FINANCIAL DOCS SECTION ENDS -->
 
                             <div class="company_profile">
                               <% for (doc of buss.companyProfile) { %>
@@ -362,4 +328,4 @@ include("../partials/admin/header") %>
   </div>
 </div>
 
-<%- include("../partials/admin/footer") %>
+    <%- include("../partials/admin/footer") %>
