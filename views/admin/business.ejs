@@ -56,6 +56,17 @@ include("../partials/admin/header") %>
     font-family: montserrat;
     font-weight: 500;
   }
+
+  #myProgress {
+  width: 100%;
+  background-color: grey;
+}
+
+#myBar {
+  width: 1%;
+  height: 30px;
+  background-color: green;
+}
 </style>
 
 <div class="content">
@@ -304,10 +315,14 @@ include("../partials/admin/header") %>
                               <% } %>
                             </div>
                           </div>
+
+                          <div class="mx-auto w-50">
+                            <div id="myProgress">
+                              <div id="myBar"></div>
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          
-                        </div>
+                        
                         <div class="py-3 m-auto">
                           <button
                             type="button"
