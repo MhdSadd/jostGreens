@@ -98,7 +98,13 @@
                             </button>
                           </td>
                           <td>
-                            <%= buss.progress %>%
+                            <!-- Progress Bar Starts -->
+                          <div class="w-50 mt-3">
+                            <div id="myProgress">
+                              <div id="myBar"></div>
+                            </div>
+                          </div>
+                          <!-- Progress Bar Ends -->
                           </td>
                           <td>
                             <%= buss.businessPhone %>
@@ -284,14 +290,6 @@
                               <% } %>
                             </div>
                           </div>
-
-                          <!-- Progress Bar Starts -->
-                          <div class="mx-auto w-50 mt-3">
-                            <div id="myProgress">
-                              <div id="myBar"></div>
-                            </div>
-                          </div>
-                          <!-- Progress Bar Ends -->
                         </div>
                         
                         <div class="py-3 m-auto">
