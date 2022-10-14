@@ -51,19 +51,22 @@
 
   li {
     list-style: none;
-    font-family: montserrat;
+    /* font-family: montserrat; */
     font-weight: 500;
   }
 
   #myProgress {
   width: 100%;
-  background-color: grey;
+  border: 2px solid #58b15d;
+  /* border-radius: 10px; */
+  background-color: transparent;
 }
 
 #myBar {
-  width: 1%;
+  width: 50%;
   height: 30px;
-  background-color: green;
+  /* border-radius: 10px; */
+  background-color: #58b15d;
 }
 </style>
 
@@ -282,11 +285,13 @@
                             </div>
                           </div>
 
-                          <div class="mx-auto w-50">
+                          <!-- Progress Bar Starts -->
+                          <div class="mx-auto w-50 mt-3">
                             <div id="myProgress">
                               <div id="myBar"></div>
                             </div>
                           </div>
+                          <!-- Progress Bar Ends -->
                         </div>
                         
                         <div class="py-3 m-auto">

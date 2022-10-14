@@ -1,7 +1,5 @@
 <%- include("../partials/default/header") %>
 
-
-
   <div class="form_wrapper">
     <div class="form_container">
       <div class="title_container">
@@ -10,18 +8,19 @@
       <div class="row clearfix">
         <div class="">
           <%- include ("../partials/messages"); %>
-            <form action="/register" enctype="multipart/form-data" method="POST">
+            <form>
+              <!-- action="/register" enctype="multipart/form-data" method="POST" -->
               <div class="row clearfix">
                 <div class="col_half">
                   <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-                    <input type="text" name="businessName" placeholder="Business Name" required
+                    <input type="text" name="businessName" id="businessName" placeholder="Business Name" required
                       value="<%= businessName || '' %>" />
                   </div>
                 </div>
                 <div class="col_half">
                   <div class="input_field"> <span><i aria-hidden="true" class="fa fa-map-marker"></i></span>
-                    <input type="text" name="businessAddress" placeholder="Business Address" required
-                      value="<%= businessAddress || '' %>" />
+                    <input type="text" name="businessAddress" id="businessAddress" placeholder="Business Address"
+                      required value="<%= businessAddress || '' %>" />
                   </div>
                 </div>
               </div>
@@ -29,13 +28,13 @@
               <div class="row clearfix">
                 <div class="col_half">
                   <div class="input_field"> <span><i aria-hidden="true" class="fa fa-phone"></i></span>
-                    <input type="text" name="businessPhone" placeholder="Business Phone Number" required
-                      value="<%= businessPhone || '' %>" />
+                    <input type="text" name="businessPhone" id="businessPhone" placeholder="Business Phone Number"
+                      required value="<%= businessPhone || '' %>" />
                   </div>
                 </div>
                 <div class="col_half">
                   <div class="input_field select_option">
-                    <select name="businessCategory">
+                    <select name="businessCategory" id="businessCategory">
                       <option selected disabled>Business Category</option>
                       <option>Technology</option>
                       <option>Agriculture</option>
@@ -53,14 +52,16 @@
                   <div class="input_field">
                     <label for="img" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
                           class="fas fa-upload"></i></span>Incorporation Document</label>
-                    <input type="file" name="IncopDocs" multiple accept=".pdf, .png, .jpg, .jpeg" id="img" required />
+                    <input type="file" name="IncopDocs" multiple accept=".pdf, .png, .jpg, .jpeg" id="img IncopDocs"
+                      required />
                   </div>
                 </div>
                 <div class="col_half">
                   <div class="input_field">
                     <label for="img" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
                           class="fas fa-upload"></i></span>Company's Profile</label>
-                    <input type="file" name="Profile" multiple accept=".pdf, .png, .jpg, .jpeg" id="img" required />
+                    <input type="file" name="Profile" multiple accept=".pdf, .png, .jpg, .jpeg" id="img Profile"
+                      required />
                   </div>
                 </div>
               </div>
@@ -70,24 +71,106 @@
                   <div class="input_field">
                     <label for="img" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
                           class="fas fa-upload"></i></span>Financial Statements</label>
-                    <input type="file" name="FinDocs" multiple accept=".pdf, .png, .jpg, .jpeg" id="img" required/>
+                    <input type="file" name="FinDocs" multiple accept=".pdf, .png, .jpg, .jpeg" id="img FinDocs"
+                      required />
                   </div>
                 </div>
                 <div class="col_half">
                   <div class="input_field">
                     <label for="img" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
                           class="fas fa-upload"></i></span>Investment Pitch Deck</label>
-                    <input type="file" name="PitchDeck" multiple accept=".pdf, .png, .jpg, .jpeg" id="img" required/>
+                    <input type="file" name="PitchDeck" multiple accept=".pdf, .png, .jpg, .jpeg" id="img PitchDeck"
+                      required />
                   </div>
                 </div>
               </div>
 
-              <input type="submit" class="button" value="Register" />
+              <button type="submit" id="submit" class="btn button d-flex align-items-center justify-content-center"
+                style="width: 100%; background-color: #65b54a; color: #fff; font-size: 1.5rem;">
+                <span class="" id="spinner-wrapper">
+                  <div class="spinner-border mr-2" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  Please wait...
+                </span>
+                <span id="reg">Register</span>
+              </button>
+              <!-- <input type="submit" id="submit" class="button" value="Register" /> -->
             </form>
         </div>
       </div>
     </div>
   </div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script>
+    var loading = $("#spinner-wrapper")
+    let reg = $("#reg")
+    loading.hide();
+    reg.show()
+
+    $(document).ready(function () {
+      $("form").submit(function (e) {
+        // this is the preloader element
+
+        reg.hide()
+        loading.show()
+
+        var fileUpload = $('input[type="file"]')
+        var incopDocs = fileUpload[0].files
+        var profile = fileUpload[1].files
+        var finDocs = fileUpload[2].files
+        var pitchDeck = fileUpload[3].files
+
+        // The form data
+        var formData = {
+          businessName: $("#businessName").val(),
+          businessAddress: $("#businessAddress").val(),
+          businessPhone: $("#businessPhone").val(),
+          businessCategory: $("#businessCategory").val(),
+
+          // Documents
+          IncopDocs: incopDocs,
+          Profile: profile,
+          FinDocs: finDocs,
+          PitchDeck: pitchDeck,
+        };
+
+        // e.preventDefault();
+
+        console.log(formData)
+
+        $.ajax({
+          url: "/register",
+          type: "POST",
+          data: formData,
+          processData: false,
+          dataType: "json",
+          // encode: true,
+          // contentType: false,
+          // cache: false,
+          beforeSend: function () {
+            console.log("before sending")
+            loading.show();
+          },
+          complete: function(data, status) {
+            loading.hide();
+            reg.show()
+            console.log(status)
+            console.log(`this is the data ${data}`);
+
+          },
+          // success: function (data) {
+          //   console.log("submitted!!!")
+          //   loading.hide();
+          //   reg.show()
+          //   // console.log(`this is the data ${data}`);
+          // }
+        });
+      })
+    })
+  </script>
 
 
 
