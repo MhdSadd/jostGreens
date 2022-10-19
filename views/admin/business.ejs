@@ -53,6 +53,18 @@
         font-family: montserrat;
         font-weight: 500;
       }
+
+      #myProgress {
+        /* width: 100%; */
+        border: 2px solid #58b15d;
+        border-radius: .2rem;
+        background-color: transparent;
+      }
+
+      #myBar {
+        height: 15px;
+        background-color: #58b15d;
+      }
     </style>
 
     <div class="content">
@@ -68,7 +80,7 @@
                   <table class="table">
                     <thead class="text-black">
                       <th>Business Name</th>
-                      <th>Progress</th>
+                      <th>Investment Readiness</th>
                       <th>Phone</th>
                       <th>Address</th>
                     </thead>
@@ -83,7 +95,17 @@
                             </button>
                           </td>
                           <td>
-                            <%= buss.progress %>%
+                            <!-- Progress Bar Starts -->
+                            <div class="w-50 mt-3">
+                              <div id="myProgress">
+                                <% if (buss.progress === 50) { %>
+                                  <div id="myBar" class="w-50"></div>
+                                    <% } else { %>
+                                  <div id="myBar" class="w-100"></div>
+                                <% } %>
+                              </div>
+                            </div>
+                            <!-- Progress Bar Ends -->
                           </td>
                           <td>
                             <%= buss.businessPhone %>
@@ -255,11 +277,13 @@
                                   Close
                                 </button>
 
-                                <button class="btn btn-success" data-toggle="modal"
-                                  data-target="#interview<%=buss._id%>" title="Accept Business">
-                                  <i class="fa-solid fa-check"></i>
-                                </button>
-                                <a href="/admin/declinebuss/<%= buss._id %> " title="Decline"><button
+                                <a href="/admin/acceptbuss/<%= buss._id %> " title="Accept">
+                                  <button class="btn btn-success mx-2">
+                                    <i class="fa-solid fa-check"></i>
+                                  </button>
+                                </a>
+                                <a href="/admin/declinebuss/<%= buss._id %> " title="Decline">
+                                  <button
                                     class="btn btn-danger mx-2">
                                     <i class="fas fa-close"></i>
                                   </button>
