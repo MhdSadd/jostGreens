@@ -15,6 +15,11 @@ require("./config/passport")(passport);
 
 app.use(logger("dev"));
 
+console.log({
+  secret: process.env.SESSION_SECRET,
+  port: process.env.PORT,
+});
+
 // connecting to DB
 mongoose
   .connect(mongoURI)

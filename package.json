@@ -12,7 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "africastalking": "^0.5.5",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
@@ -29,7 +28,6 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "nigeria-phone-number-validator": "^1.0.3",
-    "node-cron": "^3.0.0",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0"
   }
