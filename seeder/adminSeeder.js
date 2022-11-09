@@ -2,7 +2,7 @@ require("dotenv").config();
 const { Admin } = require("../models/admin");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const { mongoURI } = process.env
+const { mongoURI } = process.env.mongoURI;
 console.log(mongoURI);
 
 // connecting to MongoDB with
@@ -16,10 +16,10 @@ mongoose
   });
 
 const admin = new Admin({
-  full_name: "JANE DOE",
-  email: "admin.jostgreen@gmail.com",
-  phone: 08068640710,
-  password: "123abc",
+  full_name: "CHIRNAN BARDE",
+  email: "info@jostgreens.com",
+  phone: 09034147782,
+  password: "Ash13burton",
   user_type: "Admin",
   avatar: "/images/avatarProfilePic.png",
 });

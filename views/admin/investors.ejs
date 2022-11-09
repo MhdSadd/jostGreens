@@ -72,46 +72,65 @@
         height: 15px;
         background-color: #58b15d;
       }
+
+      .form-group input {
+        border: 1px solid #58b15d;
+        border-radius: .2rem;
+        padding: 7px 1px;
+      }
+
+      .form-group input::placeholder {
+        text-align: center;
+        font-weight: lighter;
+      }
     </style>
 
     <div class="content">
 
       <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header card-header-success">
-                <h4 class="card-title">All Passwords ( <%= PasswordsCount %> )</h4>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead class="text-black">
-                      <th>Investor Name</th>
-                      <th>Investor Mail</th>
-                    </thead>
-                    <tbody>
-                      <%allPasswords.forEach(pass=> { %>
-                        <tr>
-                          <td>
-                            <!-- Button trigger modal -->
-                            <button href="/admin/single-investor/<%= pass._id %>" class="btn singleBusiness"
-                              data-toggle="modal" data-target="#ID<%=pass._id%>">
-                              <%= pass.name %>
-                            </button>
-                          </td>
-                          <td>
-                            <%= pass.mail %>
-                          </td>
-                        </tr>
-                        <% }) %>
-                    </tbody>
-                  </table>
+        <%- include ("../partials/messages"); %>
+          <form action="/admin/addinvestor" method="post">
+            <div class="form-group">
+              <input type="text" name="name" id="" placeholder="Investor's Name">
+              <input type="email" name="mail" id="" placeholder="Investor's Mail">
+              <button class="btn btn-success">Create</button>
+            </div>
+          </form>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-success">
+                  <h4 class="card-title">All Investors ( <%= PasswordsCount %> )</h4>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class="text-black">
+                        <th>Investor Name</th>
+                        <th>Investor Mail</th>
+                      </thead>
+                      <tbody>
+                        <%allPasswords.forEach(pass=> { %>
+                          <tr>
+                            <td>
+                              <!-- Button trigger modal -->
+                              <button href="/admin/single-investor/<%= pass._id %>" class="btn singleBusiness"
+                                data-toggle="modal" data-target="#ID<%=pass._id%>">
+                                <%= pass.name %>
+                              </button>
+                            </td>
+                            <td>
+                              <%= pass.mail %>
+                            </td>
+                          </tr>
+                          <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
 

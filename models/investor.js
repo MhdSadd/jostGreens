@@ -1,15 +1,16 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const passwordSchema = new Schema(
+const investorSchema = new Schema(
   {
     mail: {
       type: String,
       required: true,
       unique: true,
     },
-    Password: {
+    password: {
       type: String,
+      required: true,
     },
     name: {
       type: String,
@@ -19,4 +20,4 @@ const passwordSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = { Password: mongoose.model("password", passwordSchema) };
+module.exports = { Investor: mongoose.model("investor", investorSchema) };

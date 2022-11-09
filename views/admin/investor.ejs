@@ -82,8 +82,6 @@
                       <thead class="text-black">
                         <th>Business Name</th>
                         <th>Investment Readiness</th>
-                        <th>Phone</th>
-                        <th>Address</th>
                       </thead>
                       <tbody>
                         <%allBusinesses.forEach(buss=> { %>
@@ -108,12 +106,6 @@
                               </div>
                               <!-- Progress Bar Ends -->
                             </td>
-                            <td>
-                              <%= buss.businessPhone %>
-                            </td>
-                            <td>
-                              <%= buss.businessAddress %>
-                            </td>
                           </tr>
 
                           <!-- Business Details Modal starts -->
@@ -134,18 +126,6 @@
                                 </div>
                                 <div>
                                   <ul class="row justify-content-around py-4">
-                                    <div class="col-md-4 check d-flex align-items-center">
-                                      <i class="fa-solid fa-phone mr-2"></i>
-                                      <li class="font-weight-bold">
-                                        Phone: <%= buss.businessPhone%>
-                                      </li>
-                                    </div>
-                                    <div class="col-md-4 check d-flex align-items-center">
-                                      <i class="fa-solid fa-house mr-2"></i>
-                                      <li class="font-weight-bold">
-                                        Address: <%= buss.businessAddress%>
-                                      </li>
-                                    </div>
                                     <div class="col-md-4 check d-flex align-items-center">
                                       <i class="fa-solid fa-briefcase mr-2" aria-hidden="true"></i>
                                       <li class="font-weight-bold">

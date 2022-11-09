@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
 const passport = require("passport");
+const bcrypt = require("bcrypt");
+const randomstring = require("randomstring");
 const { Admin } = require("../models/admin");
 const { Business } = require("../models/business");
-const { Password } = require("../models/password");
+const { Investor } = require("../models/investor");
+const { passwordHash } = require("../utils/password-hasher");
+const { newInvestorMail } = require("../utils/mails");
 
 module.exports = {
   loginGet: (req, res) => {
@@ -41,13 +45,13 @@ module.exports = {
     });
   },
 
-  passwordsTable: async (req, res) => {
+  investorsTable: async (req, res) => {
     let pageTitle = "Passwords";
-    const allPasswords = await Password.find();
-    const PasswordsCount = await Password.countDocuments();
+    const allPasswords = await Investor.find();
+    const PasswordsCount = await Investor.countDocuments();
     let name = req.user.full_name;
     let email = req.user.email;
-    res.render("admin/investment-passwords", {
+    res.render("admin/investors", {
       pageTitle,
       name,
       email,
@@ -56,13 +60,38 @@ module.exports = {
     });
   },
 
-  singleBusiness: async (req, res) => {
-    let pageTitle = "Single Business";
-    let id = req.params.id;
-    console.log(id);
-    let name = req.user.full_name;
-    let email = req.user.email;
-    res.render("admin/single-business", { pageTitle, name, email });
+  addInvestor: async (req, res) => {
+    const { mail, name } = req.body;
+    const isInvestor = await Investor.findOne({ mail });
+
+    if (isInvestor) {
+      console.log("this investor already exists");
+      req.flash("success_msg", "this investor already exists");
+    } else {
+      const password = randomstring.generate({
+        length: 6,
+        charset: "alphabetic",
+      });
+
+      const hashPassword = await passwordHash(password);
+
+      const newInvestor = new Investor({
+        mail,
+        password: hashPassword,
+        name,
+      });
+
+      try {
+        await newInvestor.save();
+        
+        req.flash("success_msg", "New investor created successfully");
+        await newInvestorMail(name, mail, password);
+        res.redirect("/admin/password");
+      } catch (error) {
+        req.flash("error_msg", "error creating new investor " + error);
+        res.redirect("/admin/password");
+      }
+    }
   },
 
   accepBusiness: async (req, res) => {
