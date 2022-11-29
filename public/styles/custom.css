@@ -219,7 +219,8 @@ body {
   padding-top: 10px;
 }
 .form_wrapper input[type="text"],
-.form_wrapper input[type="file"] {
+.form_wrapper input[type="file"],
+.form_wrapper input[type="email"] {
   width: 100%;
   padding: 8px 10px 9px 35px;
   height: 35px;
@@ -232,11 +233,13 @@ body {
   transition: all 0.3s ease-in-out;
 }
 .form_wrapper input[type="text"]:hover,
-.form_wrapper input[type="file"]:hover {
+.form_wrapper input[type="file"]:hover,
+.form_wrapper input[type="email"]:hover {
   background: #fafafa;
 }
 .form_wrapper input[type="text"]:focus,
-.form_wrapper input[type="file"]:focus {
+.form_wrapper input[type="file"]:focus,
+.form_wrapper input[type="email"]:focus {
   -webkit-box-shadow: 0 0 2px 1px rgba(255, 169, 0, 0.5);
   -moz-box-shadow: 0 0 2px 1px rgba(255, 169, 0, 0.5);
   box-shadow: 0 0 2px 1px rgba(255, 169, 0, 0.5);

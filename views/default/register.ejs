@@ -46,22 +46,35 @@
                 </div>
               </div>
 
+              <div class="row clearfix">
+                <div class="col_half">
+                  <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope"></i></span>
+                    <input type="email" name="businessMail" placeholder="Business Email" required
+                      value="<%= businessMail || '' %>" />
+                  </div>
+                </div>
+                <div class="col_half">
+                  <div class="input_field"> <span><i aria-hidden="true" class="fa fa-key"></i></span>
+                    <input type="text" name="password" placeholder="Enter Password" required
+                      value="<%= password || '' %>" />
+                  </div>
+                </div>
+              </div>
+
               <!-------------------------Files upload section---------------->
               <div class="row clearfix">
                 <div class="col_half">
                   <div class="input_field">
-                    <label for="img" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
+                    <label for="" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
                           class="fas fa-upload"></i></span>Incorporation Document</label>
-                    <input type="file" name="IncopDocs" multiple accept=".pdf, .png, .jpg, .jpeg" id="img IncopDocs"
-                      required />
+                    <input type="file" name="IncopDocs" multiple accept=".pdf, .png, .jpg, .jpeg" id="img" />
                   </div>
                 </div>
                 <div class="col_half">
                   <div class="input_field">
-                    <label for="img" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
+                    <label for="" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
                           class="fas fa-upload"></i></span>Company's Profile</label>
-                    <input type="file" name="Profile" multiple accept=".pdf, .png, .jpg, .jpeg" id="img Profile"
-                      required />
+                    <input type="file" name="Profile" multiple accept=".pdf, .png, .jpg, .jpeg" id="img" />
                   </div>
                 </div>
               </div>
@@ -69,18 +82,16 @@
               <div class="row clearfix">
                 <div class="col_half">
                   <div class="input_field">
-                    <label for="img" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
+                    <label for="" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
                           class="fas fa-upload"></i></span>Financial Statements</label>
-                    <input type="file" name="FinDocs" multiple accept=".pdf, .png, .jpg, .jpeg" id="img FinDocs"
-                      required />
+                    <input type="file" name="FinDocs" multiple accept=".pdf, .png, .jpg, .jpeg" id="img" />
                   </div>
                 </div>
                 <div class="col_half">
                   <div class="input_field">
-                    <label for="img" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
+                    <label for="" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
                           class="fas fa-upload"></i></span>Investment Pitch Deck</label>
-                    <input type="file" name="PitchDeck" multiple accept=".pdf, .png, .jpg, .jpeg" id="img PitchDeck"
-                      required />
+                    <input type="file" name="PitchDeck" multiple accept=".pdf, .png, .jpg, .jpeg" id="img" />
                   </div>
                 </div>
               </div>

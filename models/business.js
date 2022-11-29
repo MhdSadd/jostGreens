@@ -15,7 +15,11 @@ const businessSchema = new Schema(
       type: String,
       required: true,
     },
-    businessCategory: {
+    businessMail: {
+      type: String,
+      required: false,
+    },
+    password: {
       type: String,
       required: true,
     },

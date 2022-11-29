@@ -1,0 +1,290 @@
+<%- include("../partials/admin/side-nav") %>
+  <%- include("../partials/admin/header") %>
+
+    <script src="https://kit.fontawesome.com/f577db74dc.js" crossorigin="anonymous"></script>
+    <style>
+      .singleBusiness {
+        color: white;
+        background-color: #58b15d;
+        padding: 0.5rem 2rem;
+        border-radius: 0.3rem;
+        font-weight: bolder;
+      }
+
+      .singleBusiness:hover {
+        color: #58b15d;
+        background-color: #fff;
+        border: 2px solid #58b15d;
+        font-weight: bolder;
+      }
+
+      .files {
+        border-bottom: 1px solid #e9ecef;
+        /* padding: 0.5rem 0; */
+      }
+
+      .modal-dialog {
+        overflow: hidden;
+      }
+
+      .contain {
+        position: relative;
+      }
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        transition: 0.5s ease-in-out;
+        background-color: #58b15d;
+      }
+
+      .contain:hover .overlay {
+        opacity: 0.9;
+      }
+
+      li {
+        list-style: none;
+        font-family: montserrat;
+        font-weight: 500;
+      }
+
+      #myProgress {
+        /* width: 100%; */
+        border: 2px solid #58b15d;
+        border-radius: .2rem;
+        background-color: transparent;
+      }
+
+      #myBar {
+        height: 15px;
+        background-color: #58b15d;
+      }
+    </style>
+
+    <div class="content">
+      <div class="container-fluid">
+        <%- include ("../partials/messages"); %>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-success">
+                  <h4 class="card-title">Businesses ( <%= bussinesCount %> )</h4>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class="text-black">
+                        <th>Business Name</th>
+                        <th>Investment Readiness</th>
+                      </thead>
+                      <tbody>
+                        <%allBusinesses.forEach(buss=> { %>
+                          <tr>
+                            <td>
+                              <!-- Button trigger modal -->
+                              <button href="/admin/single-business/<%= buss._id %>" class="btn singleBusiness"
+                                data-toggle="modal" data-target="#ID<%=buss._id%>">
+                                <%= buss.businessName %>
+                              </button>
+                            </td>
+                            <td>
+                              <!-- Progress Bar Starts -->
+                              <div class="w-50 mt-3">
+                                <div id="myProgress">
+                                  <% if (buss.progress===50) { %>
+                                    <div id="myBar" class="w-50"></div>
+                                    <% } else { %>
+                                      <div id="myBar" class="w-100"></div>
+                                      <% } %>
+                                </div>
+                              </div>
+                              <!-- Progress Bar Ends -->
+                            </td>
+                          </tr>
+
+                          <!-- Business Details Modal starts -->
+                          <div class="modal fade" id="ID<%=buss._id%>" data-backdrop="static" tabindex="-1"
+                            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                <div class="modal-header d-flex justify-content-between align-items-center">
+                                  <h5 class="modal-title" id="staticBackdropLabel">
+                                    <b>
+                                      <%- buss.businessName %>
+                                    </b>
+                                  </h5>
+                                  <button type="button" class="btn-close btn btn-default btn-md" data-dismiss="modal"
+                                    aria-label="Close">
+                                    <i class="fas fa-close"></i>
+                                  </button>
+                                </div>
+                                <div>
+                                  <ul class="row justify-content-around py-4">
+                                    <div class="col-md-4 check d-flex align-items-center">
+                                      <i class="fa-solid fa-briefcase mr-2" aria-hidden="true"></i>
+                                      <li class="font-weight-bold">
+                                        Business Category: <%= buss.businessCategory%>
+                                      </li>
+                                    </div>
+                                  </ul>
+
+                                  <div class="files d-flex justify-content-around pb-3 flex-wrap">
+
+                                    <!-- INVESTMENT PITCH DECK SECTION STARTS -->
+                                    <div class="group">
+                                      <h4>Investment Deck</h4>
+                                      <div class="investment_deck d-flex mb-5">
+                                        <% for (doc of buss.investmentDeck) { %>
+                                          <a href="<%=doc.url%>" target="_blank">
+                                            <div class="contain">
+                                              <object data="<%=doc.url%>" type="buss/pdf" width="250" height="250">
+                                                <iframe src="<%=doc.url%>" width="250" height="250"
+                                                  style="border: 1px solid #ccc">
+                                                  <p>
+                                                    Your browser does not support PDFs.
+                                                    <a href="<%=doc.url%>">Download Investment Deck</a>
+                                                  </p>
+                                                </iframe>
+                                              </object>
+                                              <div
+                                                class="overlay d-flex justify-content-center h-100 align-items-center">
+                                                <div class="text" style="color: #fff; font-weight: 600">
+                                                  VIEW
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </a>
+                                          <% } %>
+                                      </div>
+                                    </div>
+                                    <!-- INVESTMENT PITCH DECK SECTION ENDS -->
+
+
+                                    <!-- FINANCIAL DOCS SECTION STARTS -->
+                                    <div class="group">
+                                      <h4>Financial Statement</h4>
+                                      <div class="financial_statement d-flex mb-5">
+                                        <% for (doc of buss.financialStatement) { %>
+                                          <a href="<%=doc.url%>" target="_blank">
+                                            <div class="contain">
+                                              <object data="<%=doc.url%>" type="buss/pdf" width="250" height="250">
+                                                <iframe src="<%=doc.url%>" width="250" height="250"
+                                                  style="border: 1px solid #ccc">
+                                                  <p>
+                                                    Your browser does not support PDFs.
+                                                    <a href="<%=doc.url%>">Download Investment Deck</a>
+                                                  </p>
+                                                </iframe>
+                                              </object>
+                                              <div
+                                                class="overlay d-flex justify-content-center h-100 align-items-center">
+                                                <div class="text" style="color: #fff; font-weight: 600">
+                                                  VIEW
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </a>
+                                          <% } %>
+                                      </div>
+                                    </div>
+                                    <!-- FINANCIAL DOCS SECTION ENDS -->
+
+                                    <!-- COMPANY PROFILE SECTION START -->
+                                    <div class="group">
+                                      <h4>Company Profile</h4>
+                                      <div class="company_profile d-flex mb-5">
+                                        <% for (doc of buss.companyProfile) { %>
+                                          <a href="<%=doc.url%>" target="_blank">
+                                            <div class="contain">
+                                              <object data="<%=doc.url%>" type="buss/pdf" width="250" height="250">
+                                                <iframe src="<%=doc.url%>" width="250" height="250"
+                                                  style="border: 1px solid #ccc">
+                                                  <p>
+                                                    Your browser does not support PDFs.
+                                                    <a href="<%=doc.url%>">Download Investment Deck</a>
+                                                  </p>
+                                                </iframe>
+                                              </object>
+                                              <div
+                                                class="overlay d-flex justify-content-center h-100 align-items-center">
+                                                <div class="text" style="color: #fff; font-weight: 600">
+                                                  VIEW
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </a>
+                                          <% } %>
+                                      </div>
+                                    </div>
+                                    <!-- COMPANY PROFILE SECTION ENDS -->
+
+                                    <!-- INCOOPERATION DOCS SECTION STARTS -->
+                                    <div class="group">
+                                      <h4>Incorporation Doc</h4>
+                                      <div class="incorporation_doc d-flex mb-3">
+                                        <% for (doc of buss.incorporationDoc) { %>
+                                          <a href="<%=doc.url%>" target="_blank">
+                                            <div class="contain">
+                                              <object data="<%=doc.url%>" type="buss/pdf" width="250" height="250">
+                                                <iframe src="<%=doc.url%>" width="250" height="250"
+                                                  style="border: 1px solid #ccc">
+                                                  <p>
+                                                    Your browser does not support PDFs.
+                                                    <a href="<%=doc.url%>">Download Investment Deck</a>
+                                                  </p>
+                                                </iframe>
+                                              </object>
+                                              <div
+                                                class="overlay d-flex justify-content-center h-100 align-items-center">
+                                                <div class="text" style="color: #fff; font-weight: 600">
+                                                  VIEW
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </a>
+                                          <% } %>
+                                      </div>
+                                    </div>
+                                    <!-- INCOOPERATION DOCS SECTION ENDS -->
+                                  </div>
+                                </div>
+                                <div>
+
+                                </div>
+                                <div class="py-3 m-auto">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    Close
+                                  </button>
+
+                                  <a href="/admin/acceptbuss/<%= buss._id %> " title="Accept">
+                                    <button class="btn btn-success mx-2">
+                                      <i class="fa-solid fa-check"></i>
+                                    </button>
+                                  </a>
+                                  <a href="/admin/declinebuss/<%= buss._id %> " title="Decline">
+                                    <button class="btn btn-danger mx-2">
+                                      <i class="fas fa-close"></i>
+                                    </button>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <%- include("../partials/admin/footer") %>
