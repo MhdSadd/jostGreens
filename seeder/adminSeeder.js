@@ -7,7 +7,7 @@ console.log(mongoURI);
 
 // connecting to MongoDB with
 mongoose
-  .connect(mongoURI)
+  .connect('mongodb://localhost/jostGreens')
   .then(() => {
     console.log(`DB CONNECTED SUCCESSFULLY:::`);
   })
