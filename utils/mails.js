@@ -21,7 +21,7 @@ const newInvestorMail = async (name, email, password) => {
         button: {
           color: "#22BC66", // Optional action button color
           text: "Investor Dashboard",
-          link: "#",
+          link: "http://jostgreen.onrender.com/admin/login",
         },
       },
       outro: "Need help, or have any question, just reply to this mail.",
@@ -52,15 +52,7 @@ const newBusinessMail = async (businessName, businessMail) => {
       },
       intro:
         "Welcome to jostGreens business platform, You've just be signed on as a Business on our platform!",
-      action: {
-        instructions:
-          "To get started, use above credentials to log in and view several businesses investment readiness",
-        button: {
-          color: "#22BC66", // Optional action button color
-          text: "Buisness Dashboard",
-          link: "#",
-        },
-      },
+
       outro: "Need help, or have any question, just reply to this mail.",
     },
   };
