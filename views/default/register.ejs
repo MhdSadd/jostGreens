@@ -1,109 +1,176 @@
 <%- include("../partials/default/header") %>
 
-
-
-  <div class="form_wrapper">
-    <div class="form_container">
-      <div class="title_container">
-        <h2 style="color: #65b54a;">Business Registration</h2>
-      </div>
-      <div class="row clearfix">
-        <div class="">
-          <%- include ("../partials/messages"); %>
-            <form action="/register" enctype="multipart/form-data" method="POST">
-              <div class="row clearfix">
-                <div class="col_half">
-                  <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-                    <input type="text" name="businessName" placeholder="Business Name" required
-                      value="<%= businessName || '' %>" />
-                  </div>
-                </div>
-                <div class="col_half">
-                  <div class="input_field"> <span><i aria-hidden="true" class="fa fa-map-marker"></i></span>
-                    <input type="text" name="businessAddress" placeholder="Business Address" required
-                      value="<%= businessAddress || '' %>" />
-                  </div>
-                </div>
+<div class="form_wrapper">
+  <div class="form_container">
+    <div class="title_container">
+      <h2 style="color: #65b54a">Business Registration</h2>
+    </div>
+    <div class="row clearfix">
+      <div class="">
+        <%- include ("../partials/messages"); %>
+        <form action="/register" enctype="multipart/form-data" method="POST">
+          <div class="row clearfix">
+            <div class="col_half">
+              <div class="input_field">
+                <span><i aria-hidden="true" class="fa fa-user"></i></span>
+                <input
+                  type="text"
+                  name="businessName"
+                  placeholder="Business Name"
+                  required
+                  value="<%= businessName || '' %>"
+                />
               </div>
-
-              <div class="row clearfix">
-                <div class="col_half">
-                  <div class="input_field"> <span><i aria-hidden="true" class="fa fa-phone"></i></span>
-                    <input type="text" name="businessPhone" placeholder="Business Phone Number" required
-                      value="<%= businessPhone || '' %>" />
-                  </div>
-                </div>
-                <div class="col_half">
-                  <div class="input_field select_option">
-                    <select name="businessCategory">
-                      <option selected disabled>Business Category</option>
-                      <option>Technology</option>
-                      <option>Agriculture</option>
-                      <option>Fashion</option>
-                      <option>Entertainment</option>
-                    </select>
-                    <div class="select_arrow"></div>
-                  </div>
-                </div>
+            </div>
+            <div class="col_half">
+              <div class="input_field">
+                <span><i aria-hidden="true" class="fa fa-map-marker"></i></span>
+                <input
+                  type="text"
+                  name="businessAddress"
+                  placeholder="Business Address"
+                  required
+                  value="<%= businessAddress || '' %>"
+                />
               </div>
+            </div>
+          </div>
 
-              <div class="row clearfix">
-                <div class="col_half">
-                  <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope"></i></span>
-                    <input type="email" name="businessMail" placeholder="Business Email" required
-                      value="<%= businessMail || '' %>" />
-                  </div>
-                </div>
-                <div class="col_half">
-                  <div class="input_field"> <span><i aria-hidden="true" class="fa fa-key"></i></span>
-                    <input type="text" name="password" placeholder="Enter Password" required
-                      value="<%= password || '' %>" />
-                  </div>
-                </div>
+          <div class="row clearfix">
+            <div class="col_half">
+              <div class="input_field">
+                <span><i aria-hidden="true" class="fa fa-phone"></i></span>
+                <input
+                  type="text"
+                  name="businessPhone"
+                  placeholder="Business Phone Number"
+                  required
+                  value="<%= businessPhone || '' %>"
+                />
               </div>
-
-              <!-------------------------Files upload section---------------->
-              <div class="row clearfix">
-                <div class="col_half">
-                  <div class="input_field">
-                    <label for="" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
-                          class="fas fa-upload"></i></span>Incorporation Document</label>
-                    <input type="file" name="IncopDocs" multiple accept=".pdf, .png, .jpg, .jpeg" id="img" />
-                  </div>
-                </div>
-                <div class="col_half">
-                  <div class="input_field">
-                    <label for="" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
-                          class="fas fa-upload"></i></span>Company's Profile</label>
-                    <input type="file" name="Profile" multiple accept=".pdf, .png, .jpg, .jpeg" id="img" />
-                  </div>
-                </div>
+            </div>
+            <div class="col_half">
+              <div class="input_field select_option">
+                <select name="businessCategory">
+                  <option selected disabled>Business Category</option>
+                  <option>Technology</option>
+                  <option>Agriculture</option>
+                  <option>Renewable energy</option>
+                  <option>Recycling</option>
+                  <option>Processing</option>
+                  <option>Healthcare</option>
+                  <option>Financial Inclusion</option>
+                  <option>Women and Youth empowerment</option>
+                  <option>Green economy</option>
+                </select>
+                <div class="select_arrow"></div>
               </div>
+            </div>
+          </div>
 
-              <div class="row clearfix">
-                <div class="col_half">
-                  <div class="input_field">
-                    <label for="" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
-                          class="fas fa-upload"></i></span>Financial Statements</label>
-                    <input type="file" name="FinDocs" multiple accept=".pdf, .png, .jpg, .jpeg" id="img" />
-                  </div>
-                </div>
-                <div class="col_half">
-                  <div class="input_field">
-                    <label for="" class="btnn"><span class="d-none d-md-inline mr-2"><i aria-hidden="true"
-                          class="fas fa-upload"></i></span>Investment Pitch Deck</label>
-                    <input type="file" name="PitchDeck" multiple accept=".pdf, .png, .jpg, .jpeg" id="img" />
-                  </div>
-                </div>
+          <div class="row clearfix">
+            <div class="col_half">
+              <div class="input_field">
+                <span><i aria-hidden="true" class="fa fa-envelope"></i></span>
+                <input
+                  type="email"
+                  name="businessMail"
+                  placeholder="Business Email"
+                  required
+                  value="<%= businessMail || '' %>"
+                />
               </div>
+            </div>
+            <div class="col_half">
+              <div class="input_field">
+                <span><i aria-hidden="true" class="fa fa-key"></i></span>
+                <input
+                  type="text"
+                  name="password"
+                  placeholder="Enter Password"
+                  required
+                  value="<%= password || '' %>"
+                />
+              </div>
+            </div>
+          </div>
 
-              <input type="submit" class="button" value="Register" />
-            </form>
-        </div>
+          <!-------------------------Files upload section---------------->
+          <div class="row clearfix">
+            <div class="col_half">
+              <div class="input_field">
+                <label for="" class="btnn"
+                  ><span class="d-none d-md-inline mr-2"
+                    ><i aria-hidden="true" class="fas fa-upload"></i></span
+                  >Incorporation Document</label
+                >
+                <input
+                  type="file"
+                  name="IncopDocs"
+                  multiple
+                  accept=".pdf, .png, .jpg, .jpeg"
+                  id="img"
+                />
+              </div>
+            </div>
+            <div class="col_half">
+              <div class="input_field">
+                <label for="" class="btnn"
+                  ><span class="d-none d-md-inline mr-2"
+                    ><i aria-hidden="true" class="fas fa-upload"></i></span
+                  >Company's Profile</label
+                >
+                <input
+                  type="file"
+                  name="Profile"
+                  multiple
+                  accept=".pdf, .png, .jpg, .jpeg"
+                  id="img"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row clearfix">
+            <div class="col_half">
+              <div class="input_field">
+                <label for="" class="btnn"
+                  ><span class="d-none d-md-inline mr-2"
+                    ><i aria-hidden="true" class="fas fa-upload"></i></span
+                  >Financial Statements</label
+                >
+                <input
+                  type="file"
+                  name="FinDocs"
+                  multiple
+                  accept=".pdf, .png, .jpg, .jpeg"
+                  id="img"
+                />
+              </div>
+            </div>
+            <div class="col_half">
+              <div class="input_field">
+                <label for="" class="btnn"
+                  ><span class="d-none d-md-inline mr-2"
+                    ><i aria-hidden="true" class="fas fa-upload"></i></span
+                  >Investment Pitch Deck</label
+                >
+                <input
+                  type="file"
+                  name="PitchDeck"
+                  multiple
+                  accept=".pdf, .png, .jpg, .jpeg"
+                  id="img"
+                />
+              </div>
+            </div>
+          </div>
+
+          <input type="submit" class="button" value="Register" />
+        </form>
       </div>
     </div>
   </div>
+</div>
 
-
-
-  <%- include("../partials/default/footer") %>
+<%- include("../partials/default/footer") %>
