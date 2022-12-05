@@ -1,7 +1,11 @@
-const { sendEmail } = require("../config/mailer");
+const postmark = require("postmark");
 const { mailGenerator } = require("./mail.generator");
+const token = process.env.serverToken;
 
+// @desc - new investor email service
 const newInvestorMail = async (name, email, password) => {
+  const client = new postmark.ServerClient(token);
+
   const mail = {
     body: {
       name: name,
@@ -16,8 +20,8 @@ const newInvestorMail = async (name, email, password) => {
           "To get started, use above credentials to log in and view several businesses investment readiness",
         button: {
           color: "#22BC66", // Optional action button color
-          text: "Login Businesses Dashboard",
-          link: "http://nhubinternship.herokuapp.com/internshipApplication",
+          text: "Investor Dashboard",
+          link: "#",
         },
       },
       outro: "Need help, or have any question, just reply to this mail.",
@@ -26,12 +30,50 @@ const newInvestorMail = async (name, email, password) => {
 
   const html = mailGenerator.generate(mail);
 
-  return await sendEmail(
-    "jostgreens@gmail.com",
-    email,
-    "Investor's welcome mail",
-    html
-  );
+  client.sendEmail({
+    From: "mail.service@jostgreens.com",
+    To: `${email}`,
+    Subject: "JostGreen Investor's Welcome Mail",
+    TextBody: `Hello ${name}`,
+    HtmlBody: html,
+  });
 };
 
-module.exports = { newInvestorMail };
+// @desc - new business email service
+const newBusinessMail = async (businessName, businessMail) => {
+  const client = new postmark.ServerClient(token);
+
+  const mail = {
+    body: {
+      name: businessName,
+      dictionary: {
+        email: businessName,
+        // password: password,
+      },
+      intro:
+        "Welcome to jostGreens business platform, You've just be signed on as a Business on our platform!",
+      action: {
+        instructions:
+          "To get started, use above credentials to log in and view several businesses investment readiness",
+        button: {
+          color: "#22BC66", // Optional action button color
+          text: "Buisness Dashboard",
+          link: "#",
+        },
+      },
+      outro: "Need help, or have any question, just reply to this mail.",
+    },
+  };
+
+  const html = mailGenerator.generate(mail);
+
+  client.sendEmail({
+    From: "mail.service@jostgreens.com",
+    To: `${businessMail}`,
+    Subject: "JostGreen New Business Welcome Mail",
+    TextBody: `Hello ${businessName}`,
+    HtmlBody: html,
+  });
+};
+
+module.exports = { newInvestorMail, newBusinessMail };

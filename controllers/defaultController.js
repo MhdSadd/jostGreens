@@ -2,6 +2,7 @@ const { validatePhoneNumberSync } = require("nigeria-phone-number-validator");
 const { Business } = require("../models/business");
 const { passwordHash } = require("../utils/password-hasher");
 const cloudinaryMediaUpload = require(".././config/cloudinary");
+const { newBusinessMail } = require("../utils/mails");
 
 module.exports = {
   indexGet: (req, res) => {
@@ -63,7 +64,7 @@ module.exports = {
     }
 
     const businessWithMail = await Business.findOne({ businessMail });
-    if (businessWithMail) return 
+    if (businessWithMail) return;
 
     if (Object.keys(req.files).length === 0) {
       errors.push({
@@ -145,6 +146,7 @@ module.exports = {
         newBusiness.password = hashPassword;
         newBusiness.save();
         req.flash("success_msg", "Business successfully registered");
+        await newBusinessMail(businessName, businessMail);
         res.redirect("/");
       } catch (error) {
         console.log("THIS IS THE ERROR===>", error);
