@@ -1,12 +1,11 @@
 const postmark = require("postmark");
 const { mailGenerator } = require("./mail.generator");
-// const token = process.env.serverToken;
+const token = process.env.serverToken;
 
 // @desc - new investor email service
 const newInvestorMail = async (name, email, password) => {
   const client = new postmark.ServerClient(token);
-  const token = "bb68bb91-8ea2-4bb5-b9d0-3c4d0b920a73"
-  
+
   const mail = {
     body: {
       name: name,
