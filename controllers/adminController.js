@@ -85,7 +85,9 @@ module.exports = {
         await newInvestor.save();
         
         req.flash("success_msg", "New investor created successfully");
-        await newInvestorMail(name, mail, password);
+        
+        newInvestorMail(name, mail, password);
+        
         res.redirect("/admin/password");
       } catch (error) {
         req.flash("error_msg", "error creating new investor " + error);

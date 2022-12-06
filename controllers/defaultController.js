@@ -146,7 +146,9 @@ module.exports = {
         newBusiness.password = hashPassword;
         newBusiness.save();
         req.flash("success_msg", "Business successfully registered");
-        await newBusinessMail(businessName, businessMail);
+
+        newBusinessMail(businessName, businessMail);
+
         res.redirect("/");
       } catch (error) {
         console.log("THIS IS THE ERROR===>", error);
