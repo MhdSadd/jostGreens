@@ -92,7 +92,7 @@
           <form action="/admin/addinvestor" method="post">
             <div class="form-group">
               <input type="text" name="name" id="" placeholder="Investor's Name">
-              <input type="email" name="mail" id="" placeholder="Investor's Mail">
+              <input type="email" name="email" id="" placeholder="Investor's Mail">
               <button class="btn btn-success">Create</button>
             </div>
           </form>
@@ -100,7 +100,7 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-success">
-                  <h4 class="card-title">All Investors ( <%= PasswordsCount %> )</h4>
+                  <h4 class="card-title">All Investors ( <%= InvestorsCount %> )</h4>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -110,7 +110,7 @@
                         <th>Investor Mail</th>
                       </thead>
                       <tbody>
-                        <%allPasswords.forEach(pass=> { %>
+                        <%allInvestors.forEach(pass=> { %>
                           <tr>
                             <td>
                               <!-- Button trigger modal -->
@@ -120,7 +120,7 @@
                               </button>
                             </td>
                             <td>
-                              <%= pass.mail %>
+                              <%= pass.email %>
                             </td>
                           </tr>
                           <% }) %>

@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { Admin } = require("../models/admin");
+const { User } = require("../models/admin");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const { mongoURI } = process.env.mongoURI;
@@ -7,7 +7,7 @@ console.log(mongoURI);
 
 // connecting to MongoDB with
 mongoose
-  .connect('mongodb://localhost/jostGreens')
+  .connect("mongodb://localhost/jostGreens")
   .then(() => {
     console.log(`DB CONNECTED SUCCESSFULLY:::`);
   })
@@ -15,12 +15,12 @@ mongoose
     console.log(err);
   });
 
-const admin = new Admin({
-  full_name: "CHIRNAN BARDE",
+const admin = new User({
+  name: "CHIRNAN BARDE",
   email: "info@jostgreens.com",
   phone: 09034147782,
   password: "Ash13burton",
-  user_type: "Admin",
+  isAdmin: true,
   avatar: "/images/avatarProfilePic.png",
 });
 

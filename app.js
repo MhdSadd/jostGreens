@@ -72,10 +72,12 @@ app.use(passport.session());
 
 // Routes Grouping
 const defaultRoutes = require("./routes/business");
+const investorRoutes = require("./routes/investor");
 const adminRoutes = require("./routes/admin");
 
 // routes
 app.use("/", defaultRoutes);
+app.use("/investor", investorRoutes);
 app.use("/admin", adminRoutes);
 
 const PORT = process.env.PORT || 4444;
