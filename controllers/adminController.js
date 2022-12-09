@@ -2,11 +2,10 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const bcrypt = require("bcrypt");
 const randomstring = require("randomstring");
-const { Admin } = require("../models/admin");
 const { Business } = require("../models/business");
-const { Investor } = require("../models/investor");
 const { passwordHash } = require("../utils/password-hasher");
 const { newInvestorMail } = require("../utils/mails");
+const { User } = require("../models/admin");
 
 module.exports = {
   loginGet: (req, res) => {
@@ -14,10 +13,15 @@ module.exports = {
     res.render("admin/login", { pageTitle });
   },
 
-  loginPost: (req, res, next) => {
-    // console.log(req.body)
+  loginPost: async (req, res, next) => {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    const isUserAdmin = user.isAdmin;
+
     passport.authenticate("local", {
-      successRedirect: "/admin/dashboard",
+      successRedirect: `${
+        isUserAdmin ? "/admin/dashboard" : "/investor/dashboard"
+      }`,
       failureRedirect: "/admin/login",
       failureFlash: true,
     })(req, res, next);
@@ -25,8 +29,9 @@ module.exports = {
 
   dashboard: async (req, res) => {
     let pageTitle = "Dashboard";
-    let name = req.user.full_name;
+    let name = req.user.name;
     let email = req.user.email;
+
     res.render("admin/dashboard", { pageTitle, name, email });
   },
 
@@ -34,7 +39,7 @@ module.exports = {
     let pageTitle = "Businesses";
     const allBusinesses = await Business.find();
     const bussinesCount = await Business.countDocuments();
-    let name = req.user.full_name;
+    let name = req.user.name;
     let email = req.user.email;
     res.render("admin/business", {
       pageTitle,
@@ -47,24 +52,28 @@ module.exports = {
 
   investorsTable: async (req, res) => {
     let pageTitle = "Passwords";
-    const allPasswords = await Investor.find();
-    const PasswordsCount = await Investor.countDocuments();
-    let name = req.user.full_name;
+    const allInvestors = await User.find({
+      isAdmin: false,
+    });
+    const InvestorsCount = await User.countDocuments({
+      isAdmin: false,
+    });
+    let name = req.user.name;
     let email = req.user.email;
     res.render("admin/investors", {
       pageTitle,
       name,
       email,
-      allPasswords,
-      PasswordsCount,
+      allInvestors,
+      InvestorsCount,
     });
   },
 
   addInvestor: async (req, res) => {
-    const { mail, name } = req.body;
-    const isInvestor = await Investor.findOne({ mail });
+    const { email, name } = req.body;
+    const isInvestor = await User.findOne({ email });
 
-    if (isInvestor) {
+    if (isInvestor && isInvestor.isAdmin === false) {
       console.log("this investor already exists");
       req.flash("success_msg", "this investor already exists");
     } else {
@@ -75,19 +84,19 @@ module.exports = {
 
       const hashPassword = await passwordHash(password);
 
-      const newInvestor = new Investor({
-        mail,
+      const newInvestor = new User({
+        email,
         password: hashPassword,
         name,
       });
 
       try {
         await newInvestor.save();
-        
+
         req.flash("success_msg", "New investor created successfully");
-        
-        newInvestorMail(name, mail, password);
-        
+
+        newInvestorMail(name, email, password);
+
         res.redirect("/admin/password");
       } catch (error) {
         req.flash("error_msg", "error creating new investor " + error);
